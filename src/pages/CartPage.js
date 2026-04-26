@@ -1,3 +1,9 @@
+Here is the corrected code. I have removed the two unused variables that were causing the build to fail:
+
+1.  **Line 10:** Removed `const { user } = useAuth();` because the `user` variable was not used anywhere in the component.
+2.  **Line 24:** Removed `const { data } = ...` inside the `handleCheckout` function because the API response data was not used.
+
+```javascript
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
@@ -7,7 +13,7 @@ import toast from 'react-hot-toast';
 
 const CartPage = () => {
   const { cart, updateItem, removeItem, clearCart, cartLoading } = useCart();
-  const { user } = useAuth();
+  // const { user } = useAuth(); <-- REMOVED: Unused variable
   const navigate = useNavigate();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -21,7 +27,8 @@ const CartPage = () => {
     setCheckoutLoading(true);
     try {
       const items = cart.items.map(i => ({ productId: i.productId, quantity: i.quantity }));
-      const { data } = await orderApi.post('/api/orders', { items, shippingAddress: address, paymentMethod });
+      // REMOVED: const { data } = ... (Unused variable)
+      await orderApi.post('/api/orders', { items, shippingAddress: address, paymentMethod });
       await clearCart();
       toast.success('Order placed successfully!');
       navigate(`/orders`);
@@ -138,3 +145,4 @@ const CartPage = () => {
 };
 
 export default CartPage;
+```
