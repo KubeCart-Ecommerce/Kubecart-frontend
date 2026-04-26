@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { orderApi } from '../services/api';
-// import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 
 const CartPage = () => {
