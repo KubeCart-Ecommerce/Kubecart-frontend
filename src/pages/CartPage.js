@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { orderApi } from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 
 const CartPage = () => {
   const { cart, updateItem, removeItem, clearCart, cartLoading } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -19,6 +21,7 @@ const CartPage = () => {
     setCheckoutLoading(true);
     try {
       const items = cart.items.map(i => ({ productId: i.productId, quantity: i.quantity }));
+      const { data } = await orderApi.post('/api/orders', { items, shippingAddress: address, paymentMethod });
       await clearCart();
       toast.success('Order placed successfully!');
       navigate(`/orders`);
