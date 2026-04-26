@@ -19,7 +19,7 @@ const CartPage = () => {
     setCheckoutLoading(true);
     try {
       const items = cart.items.map(i => ({ productId: i.productId, quantity: i.quantity }));
-      await orderApi.post('/api/orders', { items, shippingAddress: address, paymentMethod });
+      const { data: _data } = await orderApi.post(...);
       await clearCart();
       toast.success('Order placed successfully!');
       navigate(`/orders`);
