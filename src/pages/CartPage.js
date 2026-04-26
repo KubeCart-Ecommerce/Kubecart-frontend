@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 
 const CartPage = () => {
   const { cart, updateItem, removeItem, clearCart, cartLoading } = useCart();
-  // const { user } = useAuth(); <-- REMOVED: Unused variable
   const navigate = useNavigate();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -21,7 +20,6 @@ const CartPage = () => {
     setCheckoutLoading(true);
     try {
       const items = cart.items.map(i => ({ productId: i.productId, quantity: i.quantity }));
-      // REMOVED: const { data } = ... (Unused variable)
       await orderApi.post('/api/orders', { items, shippingAddress: address, paymentMethod });
       await clearCart();
       toast.success('Order placed successfully!');
