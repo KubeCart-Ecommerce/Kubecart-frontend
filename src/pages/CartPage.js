@@ -1,9 +1,3 @@
-Here is the corrected code. I have removed the two unused variables that were causing the build to fail:
-
-1.  **Line 10:** Removed `const { user } = useAuth();` because the `user` variable was not used anywhere in the component.
-2.  **Line 24:** Removed `const { data } = ...` inside the `handleCheckout` function because the API response data was not used.
-
-```javascript
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
@@ -145,4 +139,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-```
